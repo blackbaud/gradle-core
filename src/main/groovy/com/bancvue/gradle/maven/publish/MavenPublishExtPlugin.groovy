@@ -61,18 +61,18 @@ class MavenPublishExtPlugin implements Plugin<Project> {
 
 	private void addMavenLocalAndOrganizationArtifactRepository() {
 		project.repositories.mavenLocal()
-        project.repositories {
-            maven {
-                if (repositoryProperties.hasReadCredentialsDefined()) {
-                    credentials {
-                        username repositoryProperties.readUsername
-                        password repositoryProperties.readPassword
-                    }
-                }
-                name repositoryProperties.name
-                url repositoryProperties.publicUrl
-            }
-        }
+		project.repositories {
+			maven {
+				if (repositoryProperties.hasReadCredentialsDefined()) {
+					credentials {
+						username repositoryProperties.readUsername
+						password repositoryProperties.readPassword
+					}
+				}
+				name repositoryProperties.name
+				url repositoryProperties.publicUrl
+			}
+		}
 	}
 
 	private boolean isSnapshotProject() {
@@ -88,20 +88,20 @@ class MavenPublishExtPlugin implements Plugin<Project> {
 	}
 
 	private void addOrganizationPublishingRepository() {
-        project.publishing {
-            repositories {
-                maven {
-                    name repositoryProperties.name
-                    url acquireRepositoryPublishUrl()
-                    if (repositoryProperties.hasPublishCredentialsDefined()) {
-                        credentials {
-                            username repositoryProperties.username
-                            password repositoryProperties.password
-                        }
-                    }
-                }
-            }
-        }
+		project.publishing {
+			repositories {
+				maven {
+					name repositoryProperties.name
+					url acquireRepositoryPublishUrl()
+					if (repositoryProperties.hasPublishCredentialsDefined()) {
+						credentials {
+							username repositoryProperties.username
+							password repositoryProperties.password
+						}
+					}
+				}
+			}
+		}
 	}
 
 }
