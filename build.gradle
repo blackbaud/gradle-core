@@ -31,6 +31,7 @@ dependencies {
 	compile gradleApi()
 	compile "nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0"
 
+	mainTestCompile gradleTestKit()
 	mainTestCompile 'commons-io:commons-io:2.4'
 	mainTestCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
 		exclude group: 'org.codehaus.groovy'

@@ -15,9 +15,7 @@
  */
 package com.bancvue.gradle.test
 
-import org.gradle.testkit.functional.ExecutionResult
-import org.gradle.testkit.functional.GradleRunner
-import org.gradle.testkit.functional.GradleRunnerFactory
+import org.gradle.testkit.runner.BuildResult
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
@@ -26,24 +24,18 @@ abstract class AbstractPluginIntegrationSpecification extends Specification {
 
 	@Rule
 	public TemporaryFolder projectDir = new TemporaryFolder()
-	protected boolean runWithStacktrace = true
-	protected ProjectFileSystem projectFS
-	protected GradleRunner runner
+	protected TestGradleBuild testGradleBuild
 
 	void setup() {
-		runner = GradleRunnerFactory.create()
-		runner.directory = projectDir.root
-		projectFS = new ProjectFileSystem(projectDir.root)
-		projectFS.initBuildDir()
+		testGradleBuild = new TestGradleBuild(projectDir.root)
 	}
 
-	protected ExecutionResult run(String... args) {
-		runner.arguments.addAll(args)
-		if (runWithStacktrace) {
-			runner.arguments.add("--stacktrace")
-		}
+	protected BuildResult run(String... args) {
+		testGradleBuild.run(args)
+	}
 
-		runner.run()
+	protected ProjectFileSystem getProjectFS() {
+		testGradleBuild.projectFS
 	}
 
 	protected TestFile getBuildFile() {
