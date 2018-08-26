@@ -34,7 +34,7 @@ jarMainTest.archiveName='mainTest.jar'
 		run("check", "jarMainTest")
 
 		then:
-		file("build/classes/mainTest/Class.class").exists()
+		file("build/classes/java/mainTest/Class.class").exists()
 		ZipArchive mainTestJar = projectFS.archive("build/libs/mainTest.jar")
 		mainTestJar.exists()
 		mainTestJar.acquireContentForEntryWithNameLike("Class.class")

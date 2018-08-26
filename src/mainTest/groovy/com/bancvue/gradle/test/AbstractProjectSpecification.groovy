@@ -15,8 +15,8 @@
  */
 package com.bancvue.gradle.test
 
-import com.google.common.io.Files
 import org.gradle.api.Project
+import org.gradle.internal.impldep.com.google.common.io.Files
 import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification
 

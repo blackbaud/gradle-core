@@ -17,9 +17,9 @@ package com.bancvue.gradle.support
 
 import com.bancvue.exception.ExceptionSupport
 import com.bancvue.gradle.test.AbstractProjectSpecification
-import com.google.common.io.Files
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskExecutionException
+import org.gradle.internal.impldep.com.google.common.io.Files
 import spock.lang.Unroll
 
 @Mixin(ExceptionSupport)
