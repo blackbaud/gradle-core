@@ -89,6 +89,10 @@ public class ${testName} {
 		assert !(xmlCoverageReport.text =~ /${expectedTestFile.baseName}/)
 	}
 
+	private TestFile jacocoReportFile(String partialPath) {
+		file("build/reports/jacoco/${partialPath}")
+	}
+
 	def "should create combined report for all known test configurations"() {
 		given:
 		createSrcAndTestFiles(mainSrcFile, testDir)
@@ -108,9 +112,9 @@ apply plugin: 'com.bancvue.component-test'
 		file("build/jacoco/componentTest.exec").size() > 0
 		file("build/jacoco/jacocoAllMerge.exec").size() > 0
 		// verify coverage was generated for all test configurations
-		file("build/reports/jacoco/test/html/index.html").exists()
-		file("build/reports/jacoco/componentTest/html/index.html").exists()
-		file("build/reports/jacoco/all/html/index.html").exists()
+		jacocoReportFile("jacocoTestReport/html/index.html").exists()
+		jacocoReportFile("jacocoComponentTestReport/html/index.html").exists()
+		jacocoReportFile("jacocoAllReport/html/index.html").exists()
 	}
 
 	def "should include all main source sets by default and also respect overrides when configured"() {
@@ -131,9 +135,9 @@ jacocoComponentTestReport {
 		run("coverage")
 
 		then:
-		TestFile testCoverageReport = file("build/reports/jacoco/test/test.xml")
-		TestFile componentTestCoverageReport = file("build/reports/jacoco/componentTest/componentTest.xml")
-		TestFile allCoverageReport = file("build/reports/jacoco/all/all.xml")
+		TestFile testCoverageReport = jacocoReportFile("jacocoTestReport/jacocoTestReport.xml")
+		TestFile componentTestCoverageReport = jacocoReportFile("jacocoComponentTestReport/jacocoComponentTestReport.xml")
+		TestFile allCoverageReport = jacocoReportFile("jacocoAllReport/jacocoAllReport.xml")
 		assertCoverageReportReferencesTestFile(testCoverageReport, mainSrcFile)
 		assertCoverageReportReferencesTestFile(testCoverageReport, mainTestSrcFile)
 		assertCoverageReportReferencesTestFile(allCoverageReport, mainSrcFile)
@@ -153,8 +157,8 @@ apply plugin: 'com.bancvue.jacoco-ext'
 		run("coverage")
 
 		then:
-		file("build/reports/jacoco/test/html/bv/${mainSrcFile.baseName}.html").exists()
-		file("build/reports/jacoco/test/html/bv/${mainSrcFile.name}.html").exists()
+		jacocoReportFile("jacocoTestReport/html/bv/${mainSrcFile.baseName}.html").exists()
+		jacocoReportFile("jacocoTestReport/html/bv/${mainSrcFile.name}.html").exists()
 	}
 
 }

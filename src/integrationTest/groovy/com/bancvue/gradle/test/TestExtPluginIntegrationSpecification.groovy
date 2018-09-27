@@ -16,7 +16,7 @@
 package com.bancvue.gradle.test
 
 import com.bancvue.zip.ZipArchive
-import org.gradle.testkit.functional.ExecutionResult
+import org.gradle.testkit.runner.BuildResult
 
 class TestExtPluginIntegrationSpecification extends AbstractPluginIntegrationSpecification {
 
@@ -34,7 +34,7 @@ jarMainTest.archiveName='mainTest.jar'
 		run("check", "jarMainTest")
 
 		then:
-		file("build/classes/mainTest/Class.class").exists()
+		file("build/classes/java/mainTest/Class.class").exists()
 		ZipArchive mainTestJar = projectFS.archive("build/libs/mainTest.jar")
 		mainTestJar.exists()
 		mainTestJar.acquireContentForEntryWithNameLike("Class.class")
@@ -89,10 +89,10 @@ class SomeTest extends spock.lang.Specification {
 }
 """
 		when:
-		ExecutionResult result = run("test", "styledTestOutput")
+		BuildResult result = run("test", "styledTestOutput")
 
 		then:
-		result.standardOutput =~ /styled test output test/
+		result.output =~ /styled test output test/
 	}
 
 }

@@ -17,7 +17,6 @@ package com.bancvue.gradle.support
 
 import com.bancvue.exception.ExceptionSupport
 import com.bancvue.gradle.test.AbstractProjectSpecification
-import com.google.common.io.Files
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskExecutionException
 import spock.lang.Unroll
@@ -33,8 +32,8 @@ class ClearArtifactCacheSpecification extends AbstractProjectSpecification {
 		return 'clearArtifactCache'
 	}
 
-	void setup() {
-		tempDir = Files.createTempDir()
+	def setup() {
+		tempDir = tmpFolder.root
 		clearArtifactCacheTask = project.tasks.create("clearArtifactCacheTask", ClearArtifactCache)
 	}
 
@@ -86,7 +85,7 @@ class ClearArtifactCacheSpecification extends AbstractProjectSpecification {
 		expect:
 		ClearArtifactCache.collectGradleCacheDirsWithName(tempDir, "com.bancvue") == [new File(cacheDir, "com.bancvue")]
 	}
-	
+
 	@Unroll("clearArtifactCache should clear #cacheDescription cache")
 	def "clearArtifactCache should clear all caches"() {
 		given:
