@@ -16,58 +16,63 @@
 package com.bancvue.gradle.test
 
 import org.gradle.api.Project
-import org.gradle.internal.impldep.com.google.common.io.Files
 import org.gradle.testfixtures.ProjectBuilder
+import org.junit.Rule
+import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
 abstract class AbstractProjectSpecification extends Specification {
 
-	private File projectDir = Files.createTempDir()
-	private Project aProject = createProject()
-	private ProjectFileSystem aProjectFS = new ProjectFileSystem(aProject.rootDir)
+    @Rule
+    public TemporaryFolder tmpFolder
+    private File projectDir
+    private Project aProject
+    private ProjectFileSystem aProjectFS
 
-	void cleanup() {
-		projectDir.deleteDir()
-	}
+    def setup() {
+        projectDir = tmpFolder.root
+        aProject = createProject()
+        aProjectFS = new ProjectFileSystem(aProject.rootDir)
+    }
 
-	protected String getProjectName() {
-		"root"
-	}
+    protected String getProjectName() {
+        "root"
+    }
 
-	protected Project getProject() {
-		aProject
-	}
+    protected Project getProject() {
+        aProject
+    }
 
-	protected void setProject(Project project) {
-		aProject = project
-	}
+    protected void setProject(Project project) {
+        aProject = project
+    }
 
-	protected ProjectFileSystem getProjectFS() {
-		aProjectFS
-	}
+    protected ProjectFileSystem getProjectFS() {
+        aProjectFS
+    }
 
-	protected void evaluateProject() {
-		aProject.evaluate()
-	}
+    protected void evaluateProject() {
+        aProject.evaluate()
+    }
 
-	protected Project createProject() {
-		ProjectBuilder.builder()
-				.withName("${projectName}-project")
-				.withProjectDir(projectDir)
-				.build()
-	}
+    protected Project createProject() {
+        ProjectBuilder.builder()
+                .withName("${projectName}-project")
+                .withProjectDir(projectDir)
+                .build()
+    }
 
-	protected Project createSubProject(String subProjectName) {
-		File subProjectDir = aProjectFS.file(subProjectName)
+    protected Project createSubProject(String subProjectName) {
+        File subProjectDir = aProjectFS.file(subProjectName)
 
-		ProjectBuilder.builder()
-				.withName(subProjectName)
-				.withProjectDir(subProjectDir)
-				.withParent(aProject)
-				.build()
-	}
+        ProjectBuilder.builder()
+                .withName(subProjectName)
+                .withProjectDir(subProjectDir)
+                .withParent(aProject)
+                .build()
+    }
 
-	protected void setArtifactId(String artifactId) {
-		aProject.ext['artifactId'] = artifactId
-	}
+    protected void setArtifactId(String artifactId) {
+        aProject.ext['artifactId'] = artifactId
+    }
 }

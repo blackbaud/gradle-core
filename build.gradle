@@ -7,10 +7,10 @@ buildscript {
 		repositorySnapshotUrl = nexusUrl + "/content/repositories/snapshots"
 	}
 
-    repositories {
-        jcenter()
-    }
-    dependencies {
+	repositories {
+		jcenter()
+	}
+	dependencies {
 		classpath 'com.github.townsfolk:gradle-release:1.2'
 		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
 	}
@@ -25,18 +25,18 @@ apply plugin: 'com.jfrog.bintray'
 
 repositories {
 	jcenter()
-    maven {
-        url "https://plugins.gradle.org/m2/"
-    }
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
 }
 
 dependencies {
 	compile gradleApi()
-    compile "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.14.0"
+	compile "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.14.0"
 
 	mainTestCompile gradleTestKit()
 	mainTestCompile 'commons-io:commons-io:2.4'
-	mainTestCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+	mainTestCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
 		exclude group: 'org.codehaus.groovy'
 	}
 	mainTestCompile 'cglib:cglib-nodep:2.2.2'
